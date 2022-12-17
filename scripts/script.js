@@ -1,4 +1,4 @@
-  "use strict";
+"use strict";
 
 /*
  *  Regalzi Jeremias
@@ -63,7 +63,10 @@ let productos = [
 
 const miniCarrito = document.getElementById("minicarrito");
 const div = document.getElementById("productos");
-div.setAttribute('class', 'row justify-content-center text-center align-items-end');
+div.setAttribute(
+  "class",
+  "row justify-content-center text-center align-items-end"
+);
 let divCompleto,
   figure,
   img,
@@ -85,17 +88,19 @@ const armar = (array) => {
   array.forEach((producto) => {
     divCompleto = document.createElement("div");
     divCompleto.setAttribute("id", `${producto.id}`);
-    divCompleto.setAttribute('class', 'col-10 col-sm-5 col-md-3 shadow py-3 px-3 my-3 mx-2 rounded')
+    divCompleto.setAttribute(
+      "class",
+      "col-10 col-sm-5 col-md-3 shadow py-3 px-3 my-3 mx-2 rounded"
+    );
     div.prepend(divCompleto);
 
-    figure = document.createElement('figure');
+    figure = document.createElement("figure");
     divCompleto.appendChild(figure);
-
 
     img = document.createElement("img");
     img.setAttribute("src", `${producto.imagen}`);
     img.setAttribute("alt", `${producto.nombre}`);
-    img.setAttribute('class', 'img-fluid rounded')
+    img.setAttribute("class", "img-fluid rounded");
     figure.appendChild(img);
 
     divDetalles = document.createElement("div");
@@ -121,30 +126,28 @@ const armar = (array) => {
     divDetalles.appendChild(categoria);
     categoria.innerText = producto.cat;
 
-    divTalles = document.createElement('div');
-    divTalles.setAttribute('class', 'mb-3');
+    divTalles = document.createElement("div");
+    divTalles.setAttribute("class", "mb-3");
     divDetalles.appendChild(divTalles);
 
-    talleLabel = document.createElement('label');
+    talleLabel = document.createElement("label");
     divTalles.appendChild(talleLabel);
-    talleLabel.innerText = 'Talle';
+    talleLabel.innerText = "Talle";
 
-    talleSelect = document.createElement('select');
-    talleSelect.setAttribute('name', 'talle');
+    talleSelect = document.createElement("select");
+    talleSelect.setAttribute("name", "talle");
     divTalles.appendChild(talleSelect);
 
-    talleOption = document.createElement('option');
-    talleOption.setAttribute('value', `${producto.talles}`);
+    talleOption = document.createElement("option");
+    talleOption.setAttribute("value", `${producto.talles}`);
     talleSelect.appendChild(talleOption);
-    
+
     boton = document.createElement("button");
-    boton.setAttribute('class', 'btn btnAgregar');
-    boton.setAttribute('style', 'background-color:#488BC8; color:white');
+    boton.setAttribute("class", "btn btnAgregar");
+    boton.setAttribute("style", "background-color:#488BC8; color:white");
     divDetalles.appendChild(boton);
     boton.innerText = `Agregar al carrito`;
-    
 
-   
     /* card +=`
     <div class="col-10 col-sm-5 col-md-3 shadow py-3 px-3 my-3 mx-2 rounded">
               <figure class="">
@@ -177,39 +180,36 @@ armar(productos);
 
 //vaciar carrito
 let vaciarCarrito = document.createElement("button");
-vaciarCarrito.setAttribute('class', 'btn btn-danger mx-3 col-4');
+vaciarCarrito.setAttribute("class", "btn btn-danger mx-3 col-4");
 miniCarrito.lastElementChild.append(vaciarCarrito);
 vaciarCarrito.innerText = `Vaciar carrito`;
 
+vaciarCarrito.addEventListener("click", (e) => {
+  carrito = [];
+  localStorage.removeItem("carrito");
+  itemsAgregados.innerHTML = 0;
+  precioTotal.innerHTML = 0;
+  console.log(e.target);
+  console.log(`borre todos los productos del carrito`);
+});
 
-
-  vaciarCarrito.addEventListener("click", (e) => {
-    carrito = [];
-    localStorage.removeItem("carrito");
-    itemsAgregados.innerHTML = 0;
-    precioTotal.innerHTML = 0;
-    console.log(e.target);
-    console.log(`borre todos los productos del carrito`);
-  });
-
-
-
-let itemsAgregados = miniCarrito.firstElementChild.firstElementChild.firstElementChild,
-  precioTotal = miniCarrito.firstElementChild.firstElementChild.nextElementSibling.firstElementChild; 
-
-
+let itemsAgregados =
+    miniCarrito.firstElementChild.firstElementChild.firstElementChild,
+  precioTotal =
+    miniCarrito.firstElementChild.firstElementChild.nextElementSibling
+      .firstElementChild;
 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [],
   btnAgregar = document.getElementsByClassName("btnAgregar");
 
-  const totalProductos = () => {
-    let totalProductos = carrito.reduce(
-      (accumulator, producto) => accumulator + producto.cantidad,
-      0
-    );
-  
-    return totalProductos;
-  };
+const totalProductos = () => {
+  let totalProductos = carrito.reduce(
+    (accumulator, producto) => accumulator + producto.cantidad,
+    0
+  );
+
+  return totalProductos;
+};
 
 const calcular = () => {
   let total = carrito.reduce(
@@ -220,17 +220,17 @@ const calcular = () => {
   itemsAgregados.innerHTML = totalProductos();
   precioTotal.innerHTML = total;
   return total;
-}; 
-calcular(); 
-
+};
+calcular();
 
 const agregarAlCarrito = (objectId) => {
-
-  const agregado = carrito.some(producto => producto.id == objectId);
+  const agregado = carrito.some((producto) => producto.id == objectId);
   const producto = productos.find((producto) => producto.id == objectId);
 
-  if(agregado) {
-    const productoIndex = carrito.findIndex(producto => producto.id === objectId);
+  if (agregado) {
+    const productoIndex = carrito.findIndex(
+      (producto) => producto.id === objectId
+    );
     carrito.splice(productoIndex, 1);
     producto.cantidad++;
     producto.precio = 25000 * producto.cantidad;
@@ -238,6 +238,7 @@ const agregarAlCarrito = (objectId) => {
     producto.cantidad = 1;
   }
   carrito.push(producto);
+  localStorage.setItem('carrito', JSON.stringify(carrito));
   console.log(producto);
   console.log(carrito);
 };
@@ -256,130 +257,176 @@ const add = () => {
 };
 add();
 
-
 const modal = () => {
-  let 
-  modalAside,
-  modalContent,
-  modalHeader,
-  modalTitle,
-  closeModal,
-  modalBody,
-  itemsyTotal,
-  carritoVacio,
-  modalFooter,
-  hr,
-  ul,
-  li,
-  btnBorrar,
-  comprar;
+  let modalAside,
+    modalContent,
+    modalHeader,
+    modalTitle,
+    closeModal,
+    modalBody,
+    itemsyTotal,
+    carritoVacio,
+    modalFooter,
+    hr,
+    ul,
+    li,
+    btnBorrar,
+    comprar;
 
-  /*modalCarrito = document.createElement("aside");
-    modalCarrito.setAttribute("id", "modal");
-    modalCarrito.setAttribute("class", "modal");
-     modalCarrito.setAttribute('tabindex', '-1');
-    modalCarrito.setAttribute('aria-labelledby', 'exampleModalLabel');
-    modalCarrito.setAttribute('aria-hidden', 'true'); */
-    
+  modalAside = document.createElement("aside");
+  modalAside.setAttribute("id", "modal");
+  modalAside.setAttribute("class", "modal");
+  miniCarrito.after(modalAside);
 
-    modalAside = document.createElement("aside");
-    modalAside.setAttribute("id", "modal");
-    modalAside.setAttribute("class", "modal");
-    miniCarrito.after(modalAside);
-    
-    modalContent = document.createElement("div");
-    modalContent.setAttribute('class', 'content-modal');
-    modalAside.prepend(modalContent);
-    
-    modalHeader = document.createElement("header");
-    modalHeader.setAttribute('class', 'modal-header');
-    modalContent.prepend(modalHeader);
-    
-    modalTitle = document.createElement('h1');
-    /* modalTitle.setAttribute('class', 'modal-title fs-5');
-    modalTitle.setAttribute('id', 'exampleModalLabel'); */
-    modalTitle.innerText = `Mi carrito`;
-    modalHeader.prepend(modalTitle);
+  modalContent = document.createElement("div");
+  modalContent.setAttribute("class", "content-modal");
+  modalAside.prepend(modalContent);
 
-    closeModal = document.createElement('a');
-    /* closeModal.setAttribute('href', '#'); */
-    closeModal.setAttribute('class', 'close-modal');
-    closeModal.setAttribute('id', 'cerrarModal');
-    /* closeModal.setAttribute('data-bs-dismiss', 'modal');
-    closeModal.setAttribute('aria-label', 'Close'); */
-    modalTitle.after(closeModal);
-    closeModal.innerText = 'X';
+  modalHeader = document.createElement("header");
+  modalHeader.setAttribute("class", "modal-header");
+  modalContent.prepend(modalHeader);
 
-    modalBody = document.createElement("div");
-    modalBody.setAttribute('id', 'carritoContainer');
-    modalBody.setAttribute('class', 'modal-body');
-    modalHeader.after(modalBody);
+  modalTitle = document.createElement("h1");
+  modalTitle.innerText = `Mi carrito`;
+  modalHeader.prepend(modalTitle);
 
-    
-    if (carrito.length == 0) {
-      
-      carritoVacio = document.createElement("h2");
-      modalBody.appendChild(carritoVacio);
-      carritoVacio.innerText = `Aún no agregaste productos al carrito`;
-      
-    } else {
-      
-      itemsyTotal = document.createElement("h2");
-      itemsyTotal.setAttribute('class', 'modal-precio');
-      modalBody.appendChild(itemsyTotal);
-      itemsyTotal.innerText = `Productos totales: ${totalProductos()} - Precio total: ${calcular()}`;
-      
-      carrito.forEach((productoAgregado) => {
-        
-        hr = document.createElement("hr");
-        itemsyTotal.after(hr);
-        
-        ul = document.createElement("ul");
-        hr.after(ul);
-        
-        li = document.createElement("li");
-        ul.appendChild(li);
-        li.innerText = `${productoAgregado.nombre} 
+  closeModal = document.createElement("a");
+  closeModal.setAttribute("class", "close-modal");
+  closeModal.setAttribute("id", "cerrarModal");
+  modalTitle.after(closeModal);
+  closeModal.innerText = "X";
+
+  modalBody = document.createElement("div");
+  modalBody.setAttribute("id", "carritoContainer");
+  modalBody.setAttribute("class", "modal-body");
+  modalHeader.after(modalBody);
+
+  if (carrito.length == 0) {
+    carritoVacio = document.createElement("h2");
+    modalBody.appendChild(carritoVacio);
+    carritoVacio.innerText = `Aún no agregaste productos al carrito`;
+  } else {
+    itemsyTotal = document.createElement("h2");
+    itemsyTotal.setAttribute("class", "modal-precio");
+    modalBody.appendChild(itemsyTotal);
+    itemsyTotal.innerText = `Productos totales: ${totalProductos()} - Precio total: $${calcular()}`;
+
+    carrito.forEach((productoAgregado) => {
+      hr = document.createElement("hr");
+      itemsyTotal.after(hr);
+
+      ul = document.createElement("ul");
+      hr.after(ul);
+
+      li = document.createElement("li");
+      ul.appendChild(li);
+      li.innerText = `${productoAgregado.nombre} 
                 Precio: $${productoAgregado.precio} 
                 Cantidad: ${productoAgregado.cantidad}`;
-        
-        btnBorrar = document.createElement('button')
-    });
-    modalFooter = document.createElement('footer');
-    modalFooter.setAttribute('class', 'modal-footer');
-    modalContent.append(modalFooter);
-    
-    comprar = document.createElement('button');
-    comprar.setAttribute('class', 'btn btn-primary');
-    modalFooter.appendChild(comprar);
-    comprar.innerText = 'Finalizar compra';
-    comprar.addEventListener('click', (e) => {
-      console.log(e.target);
-      console.log('Paso al checkout');
-    });
-    
-  }
 
-     let cerrarModal = document.getElementById('cerrarModal')
-      cerrarModal.addEventListener ('click', () => {
-        modalAside.remove()
-      }) 
+      btnBorrar = document.createElement('button')
+      btnBorrar.setAttribute('class', 'botonesBorrar mx-3')
+      btnBorrar.setAttribute('id', `${productoAgregado.id}`)
+      btnBorrar.innerText = 'Eliminar uno';
+      li.appendChild(btnBorrar)
+
+    });
+    modalFooter = document.createElement("footer");
+    modalFooter.setAttribute("class", "modal-footer");
+    modalContent.append(modalFooter);
+
+    comprar = document.createElement("button");
+    comprar.setAttribute("class", "btn btn-primary");
+    modalFooter.appendChild(comprar);
+    comprar.innerText = "Comprar";
+    
+    comprar.addEventListener("click", (e) => {
+      console.log(e.target);
+      console.log("Paso al checkout");
+      modalBody.remove();
+      comprar.innerText = "Finalizar compra";
+      
+      let 
+      form, 
+  divName, 
+  labelName, 
+  inputName, 
+  nameValid;
   
+  modalBody = document.createElement("div");
+  modalBody.setAttribute("class", "modal-body");
+  modalHeader.after(modalBody);
+  
+  form = document.createElement("form");
+  form.setAttribute("class", "row justify-content-center py-4 needs-validation");
+  form.setAttribute("method", "post");
+  form.setAttribute("novalidate");
+  modalBody.prepend(form);
+  
+  divName = document.createElement("div");
+  divName.setAttribute("class", "col-8 col-sm-4 mb-3");
+  form.appendChild(divName);
+  
+  labelName = document.createElement("label");
+  labelName.setAttribute("for", "formulario1");
+    labelName.setAttribute("class", "form-label");
+    labelName.innerText = "Nombre";
+    divName.appendChild(labelName);
+    
+    inputName = document.createElement("input");
+    inputName.setAttribute("type", "text");
+    inputName.setAttribute("name", "nombre");
+    inputName.setAttribute("class", "form-control");
+    inputName.setAttribute("id", "formulario1");
+    inputName.setAttribute("placeholder", "Nombre");
+    inputName.setAttribute("required");
+    divName.appendChild(inputName);
+    
+    nameValid = document.createElement("div");
+    nameValid.setAttribute("class", "valid-feedback");
+    divName.appendChild(nameValid); 
+  }); 
+}
+  
+  let cerrarModal = document.getElementById("cerrarModal");
+  cerrarModal.addEventListener("click", () => {
+    modalAside.remove();
+  });
+  
+  let botonesBorrar = document.getElementsByClassName('botonesBorrar')
+  
+  for (const boton of botonesBorrar) {
+    boton.addEventListener('click', (e) => {
+
+        const producto = carrito.find((producto) => producto.id == e.target.id);
+      
+        if(producto.cantidad > 1) {
+          producto.cantidad--;
+          producto.precio = 25000 * producto.cantidad;
+        } else {
+          const productoIndex = carrito.findIndex(producto => producto.id === e.target.id);
+          carrito.splice(productoIndex, 1);
+        }
+        
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        
+        modalAside.remove()
+        modal()
+        calcular()
+      })
+    }
+
 };
 
-
-
 //ver carrito
-let verCarrito = miniCarrito.lastElementChild.lastElementChild.previousElementSibling; 
-
-
+let verCarrito =
+  miniCarrito.lastElementChild.lastElementChild.previousElementSibling;
 
 verCarrito.addEventListener("click", (e) => {
-  
   modal();
   console.log(e.target);
   console.log("se muestra el carrito");
-}); 
+});
 
 const borrar = () => {
   productos.forEach((producto) => {
@@ -387,15 +434,16 @@ const borrar = () => {
       div.removeChild(document.getElementById(`${producto.id}`));
     }
   });
-}; 
-
+};
 
 //llamo a la categoria 1
 const cat1 = productos.filter((producto) => producto.cat === "Categoria 1");
-let firstCat = miniCarrito.lastElementChild.lastElementChild.previousElementSibling.previousElementSibling.firstElementChild;
+let firstCat =
+  miniCarrito.lastElementChild.lastElementChild.previousElementSibling
+    .previousElementSibling.firstElementChild;
 
 firstCat.addEventListener("click", (e) => {
-  borrar(); 
+  borrar();
   armar(cat1);
   add();
   //console.log(e.target);
@@ -404,10 +452,12 @@ firstCat.addEventListener("click", (e) => {
 
 //llamo a la categoria 2
 const cat2 = productos.filter((producto) => producto.cat === "Categoria 2");
-let secondCat = miniCarrito.lastElementChild.lastElementChild.previousElementSibling.previousElementSibling.firstElementChild.nextElementSibling;
+let secondCat =
+  miniCarrito.lastElementChild.lastElementChild.previousElementSibling
+    .previousElementSibling.firstElementChild.nextElementSibling;
 
 secondCat.addEventListener("click", (e) => {
-  borrar(); 
+  borrar();
   armar(cat2);
   add();
   //console.log(e.target);
@@ -416,10 +466,12 @@ secondCat.addEventListener("click", (e) => {
 
 //llamo a la categoria 3
 const cat3 = productos.filter((producto) => producto.cat === "Categoria 3");
-let thirdCat = miniCarrito.lastElementChild.lastElementChild.previousElementSibling.previousElementSibling.lastElementChild.previousElementSibling;
+let thirdCat =
+  miniCarrito.lastElementChild.lastElementChild.previousElementSibling
+    .previousElementSibling.lastElementChild.previousElementSibling;
 
 thirdCat.addEventListener("click", (e) => {
-  borrar(); 
+  borrar();
   armar(cat3);
   add();
   //console.log(e.target);
@@ -427,8 +479,10 @@ thirdCat.addEventListener("click", (e) => {
 });
 
 //Todas las categorias
-const todasCat = productos.filter((producto) => producto.precio === 25000 );
-let allCat = miniCarrito.lastElementChild.lastElementChild.previousElementSibling.previousElementSibling.lastElementChild;
+const todasCat = productos.filter((producto) => producto.precio === 25000);
+let allCat =
+  miniCarrito.lastElementChild.lastElementChild.previousElementSibling
+    .previousElementSibling.lastElementChild;
 
 allCat.addEventListener("click", (e) => {
   borrar();
@@ -437,5 +491,3 @@ allCat.addEventListener("click", (e) => {
   console.log(e.target);
   console.log(`muestro todas las categorias`);
 });
-
-
