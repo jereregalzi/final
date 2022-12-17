@@ -217,7 +217,7 @@ const calcular = () => {
     0
   );
   console.log(total);
-  itemsAgregados.innerHTML = carrito.length;
+  itemsAgregados.innerHTML = totalProductos();
   precioTotal.innerHTML = total;
   return total;
 }; 
@@ -302,10 +302,10 @@ const modal = () => {
     modalHeader.prepend(modalTitle);
 
     closeModal = document.createElement('a');
-    closeModal.setAttribute('href', '#');
+    /* closeModal.setAttribute('href', '#'); */
     closeModal.setAttribute('class', 'close-modal');
-    /* closeModal.setAttribute('id', 'cerrarModal');
-    closeModal.setAttribute('data-bs-dismiss', 'modal');
+    closeModal.setAttribute('id', 'cerrarModal');
+    /* closeModal.setAttribute('data-bs-dismiss', 'modal');
     closeModal.setAttribute('aria-label', 'Close'); */
     modalTitle.after(closeModal);
     closeModal.innerText = 'X';
@@ -315,60 +315,62 @@ const modal = () => {
     modalBody.setAttribute('class', 'modal-body');
     modalHeader.after(modalBody);
 
-    modalFooter = document.createElement('footer');
-    modalFooter.setAttribute('class', 'modal-footer');
-    modalContent.append(modalFooter);
-
-  if (carrito.length == 0) {
-
-    carritoVacio = document.createElement("p");
-    modalBody.appendChild(carritoVacio);
-    carritoVacio.innerText = `Aún no agregaste productos al carrito`;
-
-  } else {
-  
-    itemsyTotal = document.createElement("p");
-    itemsyTotal.setAttribute('class', 'modal-precio');
-    modalBody.appendChild(itemsyTotal);
-    itemsyTotal.innerText = `Productos totales: ${carrito.length} - Precio total: ${calcular()}`;
-
-    carrito.forEach((productoAgregado) => {
-
-      hr = document.createElement("hr");
-      itemsyTotal.after(hr);
-
-      ul = document.createElement("ul");
-      hr.after(ul);
+    
+    if (carrito.length == 0) {
+      
+      carritoVacio = document.createElement("h2");
+      modalBody.appendChild(carritoVacio);
+      carritoVacio.innerText = `Aún no agregaste productos al carrito`;
+      
+    } else {
+      
+      itemsyTotal = document.createElement("h2");
+      itemsyTotal.setAttribute('class', 'modal-precio');
+      modalBody.appendChild(itemsyTotal);
+      itemsyTotal.innerText = `Productos totales: ${totalProductos()} - Precio total: ${calcular()}`;
+      
+      carrito.forEach((productoAgregado) => {
+        
+        hr = document.createElement("hr");
+        itemsyTotal.after(hr);
+        
+        ul = document.createElement("ul");
+        hr.after(ul);
         
         li = document.createElement("li");
         ul.appendChild(li);
-        li.innerText = `${productoAgregado.nombre}, Precio: $${productoAgregado.precio}`;
-      
-      btnBorrar = document.createElement('button')
+        li.innerText = `${productoAgregado.nombre} 
+                Precio: $${productoAgregado.precio} 
+                Cantidad: ${productoAgregado.cantidad}`;
+        
+        btnBorrar = document.createElement('button')
     });
+    modalFooter = document.createElement('footer');
+    modalFooter.setAttribute('class', 'modal-footer');
+    modalContent.append(modalFooter);
     
     comprar = document.createElement('button');
-      comprar.setAttribute('class', 'btn btn-primary');
-      modalBody.appendChild(comprar);
-      comprar.innerText = 'Finalizar compra';
+    comprar.setAttribute('class', 'btn btn-primary');
+    modalFooter.appendChild(comprar);
+    comprar.innerText = 'Finalizar compra';
     comprar.addEventListener('click', (e) => {
-        console.log(e.target);
-        console.log('Paso al checkout');
+      console.log(e.target);
+      console.log('Paso al checkout');
     });
     
   }
 
-    /* let cerrarModal = document.getElementById('cerrarModal')
+     let cerrarModal = document.getElementById('cerrarModal')
       cerrarModal.addEventListener ('click', () => {
-        modalDialog.remove()
-      }) */
+        modalAside.remove()
+      }) 
   
 };
 
 
 
 //ver carrito
-let verCarrito = miniCarrito.lastElementChild.lastElementChild.previousElementSibling;
+let verCarrito = miniCarrito.lastElementChild.lastElementChild.previousElementSibling; 
 
 
 

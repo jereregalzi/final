@@ -40,101 +40,38 @@ button[value="Enviar"]{
 
 .modal {
     position: fixed;
-    top: -100vh;
+    top: 0;
     left: 0;
-    z-index: 9999;
-    background-color: rgba(0, 0, 0, 0.75);
-    width: 100vw;
-    height: 100vh;
-    opacity: 0;
-    transition: opacity 0.35s ease;
+    right: 0;
+    bottom: 0;
+    background-color: #111111bd;
+    display: flex;
 }
 
 .content-modal {
-    width: 100%;
-    max-width: 500px;
-    position: fixed;
-    left: 50%;
-    top: -100vh;
-    transition: top 0.35s ease;
-    margin-left: -250px;
-    background-color: white;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    z-index: 9999;
-    border-radius: 30px;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 30px 30px 0 0;
-}
-
-.modal-header h3 {
-    margin-left: 30px;
+    width: 90%;
+    background-color: #fff;
+    margin: auto;
+    max-height: 80%;
+    overflow-y: scroll;
+    border-radius: 10px;
 }
 
 .close-modal {
-    width: 10px;
+    text-decoration: none;
     margin-right: 15px;
-    font-family: 'Quicksand', sans-serif;
-}
-
-.modal-body {
-    min-height: 300px;
-    max-height: 400px;
-    overflow-y: scroll;
+    color: black;
+    font-size: 20px;
 }
 
 .modal-precio {
-    height: 40px;
-    background-color: rgb(236, 217, 255);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 10px;
+    
 }
 
 .modal-footer {
-    height: 60px;
-    background-color: rgb(236, 217, 255);
     display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    border-radius: 0 0 30px 30px;
-}
-
-.modal-footer a {
-    padding: 10px;
-    border-radius: 15px;
-    text-align: center;
-    font-family: 'Quicksand', sans-serif;
-    background-color: rgb(165, 88, 238);
-    color: black;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.modal-footer a:hover {
-    background-color: rgb(125, 60, 185);
-}
-
-#btnVaciarCarrito {
-    transition: all 0.3s;
-}
-
-#btnVaciarCarrito:hover {
-    background-color: rgb(190, 0, 0);
-}
-
-.modal:target {
-    opacity: 1;
-    top: 0;
-}
-
-.modal:target .content-modal {
-    top: 50px;
-    transition: top 0.35s ease;
+    justify-content: end;
 }
 
 @media screen and (max-width: 760px){
