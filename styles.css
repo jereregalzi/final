@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family:'Rubik', sans-serif; 
+}
+
+h2 a{
+    scroll-margin-top:100px;
+}
+
+.nosotros{
+    background-image: url(svg/logo-marca-horizontal-light.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    
+} 
+
+nav{
+    background-color: #488BC8;
+}
+
+#verCarrito:hover {
+    cursor: pointer;
+}
+
+footer {
+    background-color: black;
+    color: white;
+}
+
+
+button[value="Enviar"]{
+    background-color: #488BC8;
+    color:white;
+}
+
+@media screen and (max-width: 760px){
+.nosotros{
+    background-image: none;
+}
+}

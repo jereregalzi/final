@@ -1,0 +1,7 @@
+Nombre: Jeremias
+Apellido: Regalzi
+DNI: 44244073
+Materia: Interacción con Dispositivos Móviles
+Docente: Ricardo Rodriguez
+Comision: C
+Turno: Mañana
