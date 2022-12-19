@@ -344,14 +344,35 @@ const modal = () => {
       console.log(e.target);
       console.log("Paso al checkout");
       modalBody.remove();
-      comprar.innerText = "Finalizar compra";
-      
-      let 
-      form, 
+      comprar.remove();
+      let finCompra = document.createElement('button');
+      finCompra.setAttribute('class', 'btn btn-primary');
+      finCompra.innerText = "Finalizar compra";
+      modalFooter.appendChild(finCompra);
+    
+  //modal checkout
+
+  let 
+  form, 
   divName, 
   labelName, 
   inputName, 
-  nameValid;
+  nameValid,
+  divEmail,
+  labelEmail,
+  divArroba,
+  spanEmail,
+  inputEmail,
+  emailValid,
+  divTel, 
+  labelTel, 
+  inputTel, 
+  telValid,
+  divDirec,
+  labelDirec,
+  inputDirec,
+  direcValid,
+  pago;
   
   modalBody = document.createElement("div");
   modalBody.setAttribute("class", "modal-body");
@@ -360,15 +381,15 @@ const modal = () => {
   form = document.createElement("form");
   form.setAttribute("class", "row justify-content-center py-4 needs-validation");
   form.setAttribute("method", "post");
-  form.setAttribute("novalidate");
+  /* form.setAttribute("novalidate"); */
   modalBody.prepend(form);
   
   divName = document.createElement("div");
-  divName.setAttribute("class", "col-8 col-sm-4 mb-3");
+  divName.setAttribute("class", "col-10 col-sm-10 mb-3");
   form.appendChild(divName);
   
-  labelName = document.createElement("label");
-  labelName.setAttribute("for", "formulario1");
+    labelName = document.createElement("label");
+    labelName.setAttribute("for", "formulario1");
     labelName.setAttribute("class", "form-label");
     labelName.innerText = "Nombre";
     divName.appendChild(labelName);
@@ -379,12 +400,114 @@ const modal = () => {
     inputName.setAttribute("class", "form-control");
     inputName.setAttribute("id", "formulario1");
     inputName.setAttribute("placeholder", "Nombre");
-    inputName.setAttribute("required");
+    /* inputName.setAttribute("required"); */
     divName.appendChild(inputName);
     
     nameValid = document.createElement("div");
     nameValid.setAttribute("class", "valid-feedback");
-    divName.appendChild(nameValid); 
+    nameValid.innerText = 'Nombre válido'
+    divName.appendChild(nameValid);
+
+    divEmail = document.createElement("div");
+    divEmail.setAttribute("class", "col-10 col-sm-10 mb-3");
+    form.appendChild(divEmail);
+  
+    labelEmail = document.createElement("label");
+    labelEmail.setAttribute("for", "formulario1");
+    labelEmail.setAttribute("class", "form-label");
+    labelEmail.innerText = "Correo electronico";
+    divEmail.appendChild(labelEmail);
+    
+    divArroba = document.createElement("div");
+    divArroba.setAttribute('class', 'input-group has-validation');
+    divEmail.appendChild(divArroba);
+
+    spanEmail = document.createElement("span");
+    spanEmail.setAttribute('class', 'input-group-text');
+    spanEmail.setAttribute('id', 'inputGroupPrepend');
+    spanEmail.innerText = '@';
+    divArroba.appendChild(spanEmail);
+
+    inputEmail = document.createElement("input");
+    inputEmail.setAttribute("type", "email");
+    inputEmail.setAttribute("class", "form-control");
+    inputEmail.setAttribute("id", "formulario2");
+    inputEmail.setAttribute("aria-describedby", "inputGroupPrepend");
+    inputEmail.setAttribute("placeholder", "Correo electronico");
+    /* inputName.setAttribute("required"); */
+    divArroba.appendChild(inputEmail);
+    
+    emailValid = document.createElement("div");
+    emailValid.setAttribute("class", "invalid-feedback");
+    emailValid.innerText = 'Ingrese un correo electronico válido';
+    divArroba.appendChild(emailValid);
+
+    divTel = document.createElement("div");
+    divTel.setAttribute("class", "col-10 col-sm-10 mb-3");
+    form.appendChild(divTel);
+  
+    labelTel = document.createElement("label");
+    labelTel.setAttribute("for", "formulario3");
+    labelTel.setAttribute("class", "form-label");
+    labelTel.innerText = "Telefono";
+    divTel.appendChild(labelTel);
+    
+    inputTel = document.createElement("input");
+    inputTel.setAttribute("type", "tel");
+    inputTel.setAttribute("name", "tel");
+    inputTel.setAttribute("class", "form-control");
+    inputTel.setAttribute("id", "formulario3");
+    inputTel.setAttribute("placeholder", "Número de telefono");
+    /* inputTel.setAttribute("required"); */
+    divTel.appendChild(inputTel);
+    
+    telValid = document.createElement("div");
+    telValid.setAttribute("class", "valid-feedback");
+    telValid.innerText = 'Número de telefono válido'
+    divTel.appendChild(nameValid);
+    
+    divDirec = document.createElement("div");
+    divDirec.setAttribute("class", "col-10 col-sm-10 mb-3");
+    form.appendChild(divDirec);
+  
+    labelDirec = document.createElement("label");
+    labelDirec.setAttribute("for", "formulario4");
+    labelDirec.setAttribute("class", "form-label");
+    labelDirec.innerText = "Dirección de envio";
+    divDirec.appendChild(labelDirec);
+    
+    inputDirec = document.createElement("input");
+    inputDirec.setAttribute("type", "text");
+    inputDirec.setAttribute("name", "Dirección");
+    inputDirec.setAttribute("class", "form-control");
+    inputDirec.setAttribute("id", "formulario4");
+    inputDirec.setAttribute("placeholder", "Dirección de envío");
+    /* inputDirec.setAttribute("required"); */
+    divDirec.appendChild(inputDirec);
+    
+    direcValid = document.createElement("div");
+    direcValid.setAttribute("class", "valid-feedback");
+    direcValid.innerText = 'Dirección válida'
+    divDirec.appendChild(direcValid);
+    
+    pago = document.createElement('p');
+    pago.setAttribute("class", "col-12 text-center text-primary");
+    pago.innerText = 'Todos los pagos deben ser en efectivo mediante pago fácil';
+    modalBody.appendChild(pago);
+
+  finCompra.addEventListener("click", (e) => {
+    let error = document.createElement('p');
+    
+    if(inputName || inputEmail || inputTel || inputDirec == ``){
+      error.setAttribute("class", "text-center text-danger fs-5");
+      error.innerText = 'Todos los campos deben estar completos';
+      modalFooter.prepend(error);
+    } else {
+      error.setAttribute("class", "text-center text-primary fs-5");
+      error.innerText = 'Gracias por su compra, en breves le enviaremos la información de la compra a su direccción de email';
+      modalFooter.prepend(error);
+    }
+  })
   }); 
 }
   
