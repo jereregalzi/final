@@ -436,18 +436,77 @@ const borrar = () => {
   });
 };
 
+const modalOferta = () => {
+ let 
+    modalAside,
+    modalContent,
+    modalHeader,
+    modalTitle,
+    closeModal,
+    modalBody,
+    figure,
+    img;
+
+    modalAside = document.createElement("aside");
+    modalAside.setAttribute("id", "modal");
+    modalAside.setAttribute("class", "modal");
+    miniCarrito.after(modalAside);
+  
+    modalContent = document.createElement("div");
+    modalContent.setAttribute("class", "modalOferta-content");
+    modalAside.prepend(modalContent);
+  
+    modalHeader = document.createElement("header");
+    modalHeader.setAttribute("class", "modal-header");
+    modalContent.prepend(modalHeader);
+  
+    modalTitle = document.createElement("h1");
+    modalTitle.innerText = `Lo último en RC`;
+    modalHeader.prepend(modalTitle);
+  
+    closeModal = document.createElement("a");
+    closeModal.setAttribute("class", "close-modal");
+    closeModal.setAttribute("id", "cerrarModal");
+    modalTitle.after(closeModal);
+    closeModal.innerText = "X";
+  
+    modalBody = document.createElement("div");
+    modalHeader.after(modalBody);
+
+    figure = document.createElement('figure');
+    modalBody.appendChild(figure);
+
+    img = document.createElement('img');
+    img.setAttribute('src', 'img/jordan-flyer.jpeg');
+    img.setAttribute('alt', 'jordan flyer');
+    img.setAttribute('height', '500');
+    img.setAttribute('width', '500');
+    img.setAttribute('style', 'margin: 0 20px');
+    figure.appendChild(img);
+
+   let cerrarModal = document.getElementById("cerrarModal");
+  cerrarModal.addEventListener("click", () => {
+    modalAside.remove();
+  });
+  
+  setTimeout(() => {
+    modalAside.remove();
+    
+  }, 10000);
+  
+}
+
 //llamo a la categoria 1
 const cat1 = productos.filter((producto) => producto.cat === "Categoria 1");
 let firstCat =
-  miniCarrito.lastElementChild.lastElementChild.previousElementSibling
-    .previousElementSibling.firstElementChild;
+miniCarrito.lastElementChild.lastElementChild.previousElementSibling
+.previousElementSibling.firstElementChild;
 
 firstCat.addEventListener("click", (e) => {
   borrar();
   armar(cat1);
   add();
-  //console.log(e.target);
-  //console.log(`active la cat1`);
+  modalOferta();
 });
 
 //llamo a la categoria 2
@@ -460,8 +519,7 @@ secondCat.addEventListener("click", (e) => {
   borrar();
   armar(cat2);
   add();
-  //console.log(e.target);
-  //console.log(`active la cat2`);
+  modalOferta();
 });
 
 //llamo a la categoria 3
@@ -474,8 +532,7 @@ thirdCat.addEventListener("click", (e) => {
   borrar();
   armar(cat3);
   add();
-  //console.log(e.target);
-  //console.log(`active la cat3`);
+  modalOferta();
 });
 
 //Todas las categorias

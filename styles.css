@@ -85,6 +85,16 @@ button[value="Enviar"]{
     color:white;
 }
 
+.modalOferta-content{
+    border-radius: 10px;
+    background-color: #fff;
+    margin: auto;
+}
+
+/* .modalOferta-body{
+
+}  */
+
 @media screen and (max-width: 760px){
 .nosotros{
     background-image: none;
