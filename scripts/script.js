@@ -179,19 +179,25 @@ const armar = (array) => {
 armar(productos);
 
 //vaciar carrito
-let vaciarCarrito = document.createElement("button");
-vaciarCarrito.setAttribute("class", "btn btn-danger mx-3 col-4");
-miniCarrito.lastElementChild.append(vaciarCarrito);
-vaciarCarrito.innerText = `Vaciar carrito`;
 
-vaciarCarrito.addEventListener("click", (e) => {
+
+
+let vaciar = document.createElement("button");
+vaciar.setAttribute("class", "btn btn-danger mx-3 col-4");
+miniCarrito.lastElementChild.append(vaciar);
+vaciar.innerText = `Vaciar carrito`;
+
+const vaciarCarrito = () => {
   carrito = [];
   localStorage.removeItem("carrito");
-  itemsAgregados.innerHTML = 0;
-  precioTotal.innerHTML = 0;
-  console.log(e.target);
-  console.log(`borre todos los productos del carrito`);
-});
+    itemsAgregados.innerHTML = 0;
+    precioTotal.innerHTML = 0;
+    
+    
+  };
+  vaciar.addEventListener("click", () => {
+    vaciarCarrito();
+  });
 
 let itemsAgregados =
     miniCarrito.firstElementChild.firstElementChild.firstElementChild,
@@ -495,17 +501,21 @@ const modal = () => {
     pago.innerText = 'Todos los pagos deben ser en efectivo mediante pago fácil';
     modalBody.appendChild(pago);
 
-  finCompra.addEventListener("click", (e) => {
-    let error = document.createElement('p');
+    let text = document.createElement('p');
     
-    if(inputName || inputEmail || inputTel || inputDirec == ``){
-      error.setAttribute("class", "text-center text-danger fs-5");
-      error.innerText = 'Todos los campos deben estar completos';
-      modalFooter.prepend(error);
+  finCompra.addEventListener("click", (e) => {
+    if(inputName.value, inputEmail.value, inputTel.value, inputDirec.value){
+      modalBody.remove();
+      modalFooter.appendChild(text);
+      text.setAttribute("class", "text-center text-primary fs-5");
+      text.innerText = 'Gracias por su compra, en breves le enviaremos la información de la compra a su direccción de email';
+      finCompra.remove();
+      vaciarCarrito();
     } else {
-      error.setAttribute("class", "text-center text-primary fs-5");
-      error.innerText = 'Gracias por su compra, en breves le enviaremos la información de la compra a su direccción de email';
-      modalFooter.prepend(error);
+      
+      text.setAttribute("class", "text-center text-danger fs-5");
+      text.innerText = 'Todos los campos deben estar completos';
+      modalFooter.prepend(text);
     }
   })
   }); 
