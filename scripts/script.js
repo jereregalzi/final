@@ -63,11 +63,10 @@ let productos = [
 
 const miniCarrito = document.getElementById("minicarrito");
 const div = document.getElementById("productos");
-div.setAttribute(
-  "class",
-  "row justify-content-center text-center align-items-end"
-);
-let divCompleto,
+div.setAttribute("class", "row justify-content-center text-center align-items-end");
+
+let 
+  divCompleto,
   figure,
   img,
   divDetalles,
@@ -84,7 +83,7 @@ let divCompleto,
 
 //Creo los elementos html
 const armar = (array) => {
-  /* let card = ``; */
+  
   array.forEach((producto) => {
     divCompleto = document.createElement("div");
     divCompleto.setAttribute("id", `${producto.id}`);
@@ -147,41 +146,11 @@ const armar = (array) => {
     boton.setAttribute("style", "background-color:#488BC8; color:white");
     divDetalles.appendChild(boton);
     boton.innerText = `Agregar al carrito`;
-
-    /* card +=`
-    <div class="col-10 col-sm-5 col-md-3 shadow py-3 px-3 my-3 mx-2 rounded">
-              <figure class="">
-                <img src="${producto.imagen}" class="img-fluid rounded" alt="${producto.nombre}"/>
-              </figure>
-              <div>
-                <h3>${producto.nombre}</h3>
-                <p>${producto.descripcion}</p>
-                <p>Precio: $<span>${producto.precio}</span></p>
-                <p>${producto.cat}</p>
-                <div class="mb-3">
-                  <label>Talle</label>
-                  <select name="talle">
-                    <option value="talle">38</option>
-                    <option value="talle">39</option>
-                    <option value="talle">40</option>
-                    <option value="talle">41</option>
-                    <option value="talle">42</option>
-                    <option value="talle">43</option>
-                  </select>
-                </div>
-                <button id="add" type="button" class="btn btn-primary">Agregar</button>
-            </div>
-            </div>
-    `;
-      div.innerHTML = card; */
   });
 };
 armar(productos);
 
 //vaciar carrito
-
-
-
 let vaciar = document.createElement("button");
 vaciar.setAttribute("class", "btn btn-danger mx-3 col-4");
 miniCarrito.lastElementChild.append(vaciar);
@@ -192,18 +161,14 @@ const vaciarCarrito = () => {
   localStorage.removeItem("carrito");
     itemsAgregados.innerHTML = 0;
     precioTotal.innerHTML = 0;
-    
-    
-  };
-  vaciar.addEventListener("click", () => {
+    };
+  
+    vaciar.addEventListener("click", () => {
     vaciarCarrito();
   });
 
-let itemsAgregados =
-    miniCarrito.firstElementChild.firstElementChild.firstElementChild,
-  precioTotal =
-    miniCarrito.firstElementChild.firstElementChild.nextElementSibling
-      .firstElementChild;
+let itemsAgregados = miniCarrito.firstElementChild.firstElementChild.firstElementChild,
+    precioTotal = miniCarrito.firstElementChild.firstElementChild.nextElementSibling.firstElementChild;
 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [],
   btnAgregar = document.getElementsByClassName("btnAgregar");
@@ -230,23 +195,22 @@ const calcular = () => {
 calcular();
 
 const agregarAlCarrito = (objectId) => {
-  const agregado = carrito.some((producto) => producto.id == objectId);
-  const producto = productos.find((producto) => producto.id == objectId);
 
+  const agregado = carrito.some(producto => producto.id == objectId);
+  
   if (agregado) {
-    const productoIndex = carrito.findIndex(
-      (producto) => producto.id === objectId
-    );
-    carrito.splice(productoIndex, 1);
-    producto.cantidad++;
-    producto.precio = 25000 * producto.cantidad;
+    carrito.map (producto => {
+      if (producto.id == objectId) {
+        producto.cantidad++;
+        producto.precio = producto.cantidad * 25000;
+      }
+    })
   } else {
+    const producto = productos.find((producto) => producto.id == objectId);
     producto.cantidad = 1;
-  }
-  carrito.push(producto);
+    carrito.push(producto);
+    }
   localStorage.setItem('carrito', JSON.stringify(carrito));
-  console.log(producto);
-  console.log(carrito);
 };
 
 const add = () => {
@@ -507,7 +471,7 @@ const modal = () => {
     if(inputName.value, inputEmail.value, inputTel.value, inputDirec.value){
       modalBody.remove();
       modalFooter.appendChild(text);
-      text.setAttribute("class", "text-center text-primary fs-5");
+      text.setAttribute("class", "text-center text-primary fs-4");
       text.innerText = 'Gracias por su compra, en breves le enviaremos la información de la compra a su direccción de email';
       finCompra.remove();
       vaciarCarrito();
