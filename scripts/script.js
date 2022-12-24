@@ -467,7 +467,9 @@ const modal = () => {
 
     let text = document.createElement('p');
     
-  finCompra.addEventListener("click", (e) => {
+const finalizarCompra = () => {
+  let inputError = document.getElementsByClassName('form-control');
+
     if(inputName.value, inputEmail.value, inputTel.value, inputDirec.value){
       modalBody.remove();
       modalFooter.appendChild(text);
@@ -476,18 +478,37 @@ const modal = () => {
       finCompra.remove();
       vaciarCarrito();
     } else {
-      
+      for (const input of inputError) {
+          if (!input.value){
+            input.setAttribute('style', 'border: 1px solid red;')
+          } else {
+            input.setAttribute('style', 'border: 1px solid green;')
+          }
+      }
       text.setAttribute("class", "text-center text-danger fs-5");
       text.innerText = 'Todos los campos deben estar completos';
       modalFooter.prepend(text);
     }
+  }
+    finCompra.addEventListener("click", () => {
+      finalizarCompra() 
   })
-  }); 
+  document.addEventListener("keydown", (e) => {
+    if (e.key == 'Enter') {
+      finalizarCompra()
+    }
+  })
+}); 
 }
   
   let cerrarModal = document.getElementById("cerrarModal");
   cerrarModal.addEventListener("click", () => {
     modalAside.remove();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key == 'Escape') {
+      modalAside.remove();
+    }
   });
   
   let botonesBorrar = document.getElementsByClassName('botonesBorrar')
@@ -585,7 +606,11 @@ const modalOferta = () => {
   cerrarModal.addEventListener("click", () => {
     modalAside.remove();
   });
-  
+  document.addEventListener("keydown", (e) => {
+    if (e.key == 'Escape') {
+      modalAside.remove();
+    }
+  });
   setTimeout(() => {
     modalAside.remove();
     
